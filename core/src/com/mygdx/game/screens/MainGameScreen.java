@@ -208,6 +208,10 @@ public class MainGameScreen implements Screen {
         activities.add(new Activity("sleep", 1375, 550, 0, 0, sleepMarker, sleepPopupIndex));
         activities.add(new Activity("rec", 700, 360, -30, 60, recreationMarker, recPopupIndex));
         activities.add(new Activity("eat", 1340, 150, 10, 30, eatMarker, eatPopupIndex));
+        //ADD NEW ACTIVITIES HERE // FO0TBALL AND BENCH
+        activities.add(new Activity("rec", 1158, 585, -30, 60, recreationMarker, recPopupIndex));
+        activities.add(new Activity("rec", 1060,278, -30, 60, recreationMarker, recPopupIndex));
+
 
     }
 
@@ -229,6 +233,8 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        System.out.println(player_x);
+        System.out.println(player_y);
 
         // Handling input for player movement using WASD and up/down/left/right arrows.
         int up    = Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP) ? 1 : 0;
