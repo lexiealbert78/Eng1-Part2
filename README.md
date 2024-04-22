@@ -1,13 +1,7 @@
 # ENG1 HESLINGTON HUSTLE
 
-Cohort 3 - Group 22
-- Tom Comrie
-- Daniel Redshaw
-- Rohan Sandhu
-- Cameron Pounder
-- Tunahan Sisman
-- Yousef Omar
-- Merrill Davis
+Cohort 3 - Group 26
+- 
 
 ## About
 
