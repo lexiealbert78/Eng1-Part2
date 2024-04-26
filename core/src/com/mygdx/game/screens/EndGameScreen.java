@@ -31,7 +31,7 @@ public class EndGameScreen implements Screen {
     private int percentScore;
     // Arrays to store counts each activity for each day
     private final int[] studyCounter;
-    private final int[] recCounter;
+    private final int[][] recCounter;
     private final int[][] eatCounter;
 
 
@@ -49,10 +49,11 @@ public class EndGameScreen implements Screen {
      *
      * @param game Game instance
      * @param studyCounter Array containing study counts for each day
-     * @param recCounter Array containing recreational activity counts for each day
+     * changed by jc
+     * @param recCounter Array containing recreational activity counts for each day (0=duck, 1=bench, 2=football)
      * @param eatCounter Array containing times meals are eaten for each day
      */
-    public EndGameScreen(HesHustle game, int[] studyCounter, int[] recCounter, int[][] eatCounter) {
+    public EndGameScreen(HesHustle game, int[] studyCounter, int[][] recCounter, int[][] eatCounter) {
         this.game = game;
         this.studyCounter = studyCounter;
         this.recCounter = recCounter;
@@ -269,7 +270,11 @@ public class EndGameScreen implements Screen {
          */
 
         // Number of times recreational activity was done
-        recCount = Arrays.stream(recCounter).sum();
+        //changed by jc
+        recCount = 0;
+        for (int i = 0; i < totalDays; i++) {
+            recCount += recCounter[i][0] + recCounter[i][1] + recCounter[i][2];
+        }
 
         // Points for doing recreational activities, only up to 7 times
         score += Math.min(recCount, 7) * 8;

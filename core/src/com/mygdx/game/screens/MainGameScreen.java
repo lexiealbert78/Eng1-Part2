@@ -105,7 +105,9 @@ public class MainGameScreen implements Screen {
 
     // Counters to track what activities are done on each day
     int[] studyCounter = new int[gameDaysLength];
-    int[] recCounter = new int[gameDaysLength];
+    //changed by jc
+    //0=duck, 1=bench, 2=football
+    int[][] recCounter = new int[gameDaysLength][3];
     int[][] eatCounter = new int[gameDaysLength][3];
     int mealsEaten = 0;
 
@@ -131,7 +133,7 @@ public class MainGameScreen implements Screen {
 
     // Initialise sound effect variables
     Sound eating_sound = Gdx.audio.newSound(Gdx.files.internal("sfx/eating.mp3"));
-    Sound rec_sound = Gdx.audio.newSound(Gdx.files.internal("sfx/ducks.mp3"));
+    Sound duck_sound = Gdx.audio.newSound(Gdx.files.internal("sfx/ducks.mp3"));
     Sound low_energy_sound = Gdx.audio.newSound(Gdx.files.internal("sfx/no_energy.mp3"));
     Sound low_energy_sound_long = Gdx.audio.newSound(Gdx.files.internal("sfx/no_energy_long.mp3"));
     Music sleep_sound = Gdx.audio.newMusic(Gdx.files.internal("sfx/sleeping_fade_out.mp3"));
@@ -206,11 +208,13 @@ public class MainGameScreen implements Screen {
         // Create Activity instances and add them to the activities ArrayList
         activities.add(new Activity("study", 315, 535, -40, 150, studyMarker, studyPopupIndex));
         activities.add(new Activity("sleep", 1375, 550, 0, 0, sleepMarker, sleepPopupIndex));
-        activities.add(new Activity("rec", 700, 360, -30, 60, recreationMarker, recPopupIndex));
+        //changed by jc
+        activities.add(new Activity("recduck", 700, 360, -30, 60, recreationMarker, recPopupIndex));
         activities.add(new Activity("eat", 1340, 150, 10, 30, eatMarker, eatPopupIndex));
         //ADD NEW ACTIVITIES HERE // FO0TBALL AND BENCH
-        activities.add(new Activity("rec", 1158, 585, -30, 60, recreationMarker, recPopupIndex));
-        activities.add(new Activity("rec", 1060,278, -30, 60, recreationMarker, recPopupIndex));
+        //changed by jc/la
+        activities.add(new Activity("recfootball", 1158, 585, -30, 60, recreationMarker, recPopupIndex));
+        activities.add(new Activity("recbench", 1060,278, -30, 60, recreationMarker, recPopupIndex));
 
 
     }
@@ -247,7 +251,8 @@ public class MainGameScreen implements Screen {
 
 
         // Check if the time has reached the end of the day
-        if (time == MAX_TIME){
+        //changed by jc
+        if (time >= MAX_TIME){
             // If so, progress to next day
             newDay();
         }
@@ -644,11 +649,18 @@ public class MainGameScreen implements Screen {
                         studyCounter[day]++;
                     }
 
-                    if (Objects.equals(activity.getType(), "rec")) {
+                    //changed by jc
+                    if (Objects.equals(activity.getType(), "recduck")) {
                         if(!this.game.gameMuted){
-                            rec_sound.play(1.0f);
+                            duck_sound.play(1.0f);
                         }
-                        recCounter[day]++;
+                        recCounter[day][0]++;
+                    }
+                    if (Objects.equals(activity.getType(), "recbench")) {
+                        recCounter[day][1]++;
+                    }
+                    if (Objects.equals(activity.getType(), "recfootball")) {
+                        recCounter[day][2]++;
                     }
 
                 } else {
@@ -761,7 +773,7 @@ public class MainGameScreen implements Screen {
         eating_sound.dispose();
         study_sound.dispose();
         low_energy_sound.dispose();
-        rec_sound.dispose();
+        duck_sound.dispose();
     }
 }
 
@@ -781,8 +793,8 @@ class Activity {
 
     /**
      * Activity clas constructor
-     *
-     * @param type Type of activity of : "sleep", "eat", "study", "rec"
+     * changed by jc
+     * @param type Type of activity of : "sleep", "eat", "study", "recduck", "recfootball", "recbench"
      * @param x_location X coordinate of activity
      * @param y_location Y coordinate of activity
      * @param energyUsage Energy used by doing activity

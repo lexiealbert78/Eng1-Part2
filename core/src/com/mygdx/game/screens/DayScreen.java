@@ -27,7 +27,7 @@ public class DayScreen implements Screen {
 
     // Arrays to store counts of studying, recreational activities, and eating for each day
     private final int[] studyCounter;
-    private final int[] recCounter;
+    private final int[][] recCounter;
     private final int[][] eatCounter;
 
     int day; // Current day
@@ -46,10 +46,11 @@ public class DayScreen implements Screen {
      * @param MainGameScreen Reference to the MainGameScreen
      * @param day Current day
      * @param studyCounter Array containing study counts for each day
-     * @param recCounter Array containing recreational activity counts for each day
+     * changed by jc
+     * @param recCounter Array containing recreational activity counts for each day (0=duck, 1=bench, 2=football)
      * @param eatCounter Array containing times meals are eaten for each day
      */
-    public DayScreen(HesHustle game, Screen MainGameScreen, int day, int[] studyCounter, int[] recCounter, int[][] eatCounter) {
+    public DayScreen(HesHustle game, Screen MainGameScreen, int day, int[] studyCounter, int[][] recCounter, int[][] eatCounter) {
         this.game = game;
         this.MainGameScreen = MainGameScreen;
         this.day = day;
@@ -176,7 +177,7 @@ public class DayScreen implements Screen {
         }
 
         eaten.setText(font, "Times Eaten: " + countEat);
-        rec.setText(font, "Recreational Activities:"+recCounter[day-1]);
+        rec.setText(font, "Recreational Activities:"+(recCounter[day-1][0]+recCounter[day-1][1]+recCounter[day-1][2]));
 
         // Draw text summaries to screen
         font.draw(dayBatch, summary_title, (screenWidth - 950) / 2, (float) (screenHeight * 0.5));
