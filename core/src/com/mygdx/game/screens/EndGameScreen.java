@@ -119,6 +119,9 @@ public class EndGameScreen implements Screen {
             percentScore = 100;
         }
 
+        //write percent score to leaderboard with their name
+        //ask users their name
+
         finalScore.setText(font, "Final Score: " + percentScore+" / 100");
 
         if (percentScore < 40){

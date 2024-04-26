@@ -22,6 +22,8 @@ public class MainMenuScreen implements Screen {
     Texture resumeButtonTexture;
     Texture quitButtonTexture;
 
+    Texture leaderButtonTexture;
+
     Texture muteButtonTexture;
     Texture fullButtonTexture;
     Texture title;
@@ -29,6 +31,7 @@ public class MainMenuScreen implements Screen {
 
     private Rectangle playButtonBounds;
     private Rectangle quitButtonBounds;
+    private Rectangle leaderButtonBounds;
     private Rectangle muteButtonBounds;
     private Rectangle fullButtonBounds;
 
@@ -62,6 +65,8 @@ public class MainMenuScreen implements Screen {
         resumeButtonTexture = new Texture(Gdx.files.internal("ResumeButton.png"));
         quitButtonTexture = new Texture(Gdx.files.internal("QuitButton.png"));
         muteButtonTexture = new Texture(Gdx.files.internal("VolumeButton.png"));
+        leaderButtonTexture = new Texture(Gdx.files.internal("LeaderButton.png"));
+        //byte file reminder
 
         // Change the fullscreen button depending on whether the game is fullscreen or windowed
         if (Gdx.graphics.isFullscreen()){
@@ -97,6 +102,7 @@ public class MainMenuScreen implements Screen {
 
         playButtonBounds = new Rectangle(startX - offset , (float) (screenHeight * 0.3), longButtonWidth, longButtonHeight);
         quitButtonBounds = new Rectangle(startX + offset + longButtonWidth, (float) (screenHeight * 0.3), longButtonWidth, longButtonHeight);
+        leaderButtonBounds = new Rectangle(startX + 250 + longButtonWidth, (float) (screenHeight * 0.3), longButtonWidth, longButtonHeight);
 
         int gap = 5;
         fullButtonBounds = new Rectangle(screenWidth - shortButtonWidth * 2 - gap * 2, gap, shortButtonWidth, shortButtonHeight);
@@ -132,6 +138,7 @@ public class MainMenuScreen implements Screen {
             menuBatch.draw(playButtonTexture, playButtonBounds.x, playButtonBounds.y, playButtonBounds.width, playButtonBounds.height);
         }
         menuBatch.draw(quitButtonTexture, quitButtonBounds.x, quitButtonBounds.y, quitButtonBounds.width, quitButtonBounds.height);
+        menuBatch.draw(leaderButtonTexture, leaderButtonBounds.x, leaderButtonBounds.y, leaderButtonBounds.width, leaderButtonBounds.height);
 
         if (this.game.gameMuted){
             muteButtonTexture = new Texture(Gdx.files.internal("Muted.png"));
@@ -198,7 +205,8 @@ public class MainMenuScreen implements Screen {
                 }
                 updateButtonBounds();
 
-            }
+            } //else if (leaderButtonBounds.contains(touchX, touchY)) {
+            //show leaderboard here }
         }
 
     }
@@ -218,7 +226,7 @@ public class MainMenuScreen implements Screen {
 
         menuBatch.draw(playButtonTexture, playButtonBounds.x, playButtonBounds.y, playButtonBounds.width, playButtonBounds.height);
         menuBatch.draw(quitButtonTexture, quitButtonBounds.x, quitButtonBounds.y, quitButtonBounds.width, quitButtonBounds.height);
-
+        menuBatch.draw(leaderButtonTexture, leaderButtonBounds.x, leaderButtonBounds.y, leaderButtonBounds.width, leaderButtonBounds.height);
         menuBatch.draw(muteButtonTexture, muteButtonBounds.x, muteButtonBounds.y, muteButtonBounds.width, muteButtonBounds.height);
         menuBatch.draw(fullButtonTexture, fullButtonBounds.x, fullButtonBounds.y, fullButtonBounds.width, fullButtonBounds.height);
 
@@ -250,6 +258,7 @@ public class MainMenuScreen implements Screen {
         quitButtonTexture.dispose();
         muteButtonTexture.dispose();
         fullButtonTexture.dispose();
+        leaderButtonTexture.dispose();
         title.dispose();
         background.dispose();
     }
