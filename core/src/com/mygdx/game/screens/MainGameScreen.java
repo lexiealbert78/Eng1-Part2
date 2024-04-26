@@ -233,9 +233,6 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        System.out.println(player_x);
-        System.out.println(player_y);
-
         // Handling input for player movement using WASD and up/down/left/right arrows.
         int up    = Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP) ? 1 : 0;
         int down  = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN) ? 1 : 0;

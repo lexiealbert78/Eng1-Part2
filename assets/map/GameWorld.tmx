@@ -11,7 +11,6 @@
  <tileset firstgid="987" source="Football.tsx"/>
  <tileset firstgid="988" source="goal.tsx"/>
  <tileset firstgid="991" source="bench-wood.tsx"/>
- <tileset firstgid="999" source="FootballScaled.tsx"/>
  <layer id="17" name="Grass" width="49" height="33">
   <data encoding="csv">
 296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,296,
