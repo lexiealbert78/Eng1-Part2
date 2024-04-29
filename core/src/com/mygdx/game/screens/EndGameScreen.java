@@ -33,6 +33,7 @@ public class EndGameScreen implements Screen {
     private final int[] studyCounter;
     private final int[][] recCounter;
     private final int[][] eatCounter;
+    private final int[] streakAims;
 
 
 
@@ -51,13 +52,16 @@ public class EndGameScreen implements Screen {
      * @param studyCounter Array containing study counts for each day
      * changed by jc
      * @param recCounter Array containing recreational activity counts for each day (0=duck, 1=bench, 2=football)
+     * @param streakAims Array containing streak aims passed at the end of the game
+     *
      * @param eatCounter Array containing times meals are eaten for each day
      */
-    public EndGameScreen(HesHustle game, int[] studyCounter, int[][] recCounter, int[][] eatCounter) {
+    public EndGameScreen(HesHustle game, int[] studyCounter, int[][] recCounter, int[][] eatCounter, int[] streakAims) {
         this.game = game;
         this.studyCounter = studyCounter;
         this.recCounter = recCounter;
         this.eatCounter = eatCounter;
+        this.streakAims = streakAims;
 
         // Initialise SpriteBatch for rendering
         scoreSummaryBatch = new SpriteBatch();
@@ -137,6 +141,7 @@ public class EndGameScreen implements Screen {
         GlyphLayout totalDaysStudy = new GlyphLayout();
         GlyphLayout totalRec = new GlyphLayout();
         GlyphLayout totalEat = new GlyphLayout();
+        GlyphLayout streak = new GlyphLayout();
 
         summary.setText(font, "Total Amount of: ");
         totalStudy.setText(font, "Times Studied = "+studyCount);
@@ -151,18 +156,63 @@ public class EndGameScreen implements Screen {
         // Draw the text on the screen
         font.draw(scoreSummaryBatch, gameOver, (screenWidth - gameOver.width) / 2, (float) (screenHeight*0.85));
         font.draw(scoreSummaryBatch, finalScore, (screenWidth - finalScore.width) / 2, (float) (screenHeight*0.8));
-        font.draw(scoreSummaryBatch, passFail, (screenWidth - passFail.width) / 2, (float) (screenHeight*0.7));
+        font.draw(scoreSummaryBatch, passFail, (screenWidth - passFail.width) / 2, (float) (screenHeight*0.72));
 
-        font.draw(scoreSummaryBatch, summary, (screenWidth - summary.width) / 2, (float) (screenHeight*0.5));
-        font.draw(scoreSummaryBatch, totalStudy, (screenWidth - totalStudy.width) / 2, (float) (screenHeight*0.4));
-        font.draw(scoreSummaryBatch, totalDaysStudy, (screenWidth - totalDaysStudy.width) / 2, (float) (screenHeight*0.3));
-        font.draw(scoreSummaryBatch, totalRec, (screenWidth - totalRec.width) / 2, (float) (screenHeight*0.2));
-        font.draw(scoreSummaryBatch, totalEat, (screenWidth - totalEat.width) / 2, (float) (screenHeight*0.1));
-      
+        //jc-- achievements
+        font.getData().setScale(1.75f); // Adjust the scale as needed
+        if (StreakDone("recduck")){
+            streak.setText(font, "ACHIEVEMENT: Quack Connoisseur!");
+            font.draw(scoreSummaryBatch, streak, (screenWidth - streak.width) / 2, (float) (screenHeight*0.63));
+        }
+        if (StreakDone("recbench")){
+            streak.setText(font, "ACHIEVEMENT: Bench Buddy Badge!");
+            font.draw(scoreSummaryBatch, streak, (screenWidth - streak.width) / 2, (float) (screenHeight*0.57));
+        }
+        if (StreakDone("recfootball")){
+            streak.setText(font, "ACHIEVEMENT: On a Roll!");
+            font.draw(scoreSummaryBatch, streak, (screenWidth - streak.width) / 2, (float) (screenHeight*0.51));
+        }
+        font.getData().setScale(2); // Adjust the scale as needed
+
+        font.draw(scoreSummaryBatch, summary, (screenWidth - summary.width) / 2, (float) (screenHeight*0.41));
+        font.draw(scoreSummaryBatch, totalStudy, (screenWidth - totalStudy.width) / 2, (float) (screenHeight*0.32));
+        font.draw(scoreSummaryBatch, totalDaysStudy, (screenWidth - totalDaysStudy.width) / 2, (float) (screenHeight*0.23));
+        font.draw(scoreSummaryBatch, totalRec, (screenWidth - totalRec.width) / 2, (float) (screenHeight*0.14));
+        font.draw(scoreSummaryBatch, totalEat, (screenWidth - totalEat.width) / 2, (float) (screenHeight*0.05));
+
         scoreSummaryBatch.draw(continueButton, (float) ((Gdx.graphics.getWidth() - continueButton.getWidth())/1.15), (float) ((Gdx.graphics.getHeight() - continueButton.getHeight())/10),continueButton.getWidth()*2,continueButton.getHeight()*2);
 
         scoreSummaryBatch.end();
 
+    }
+
+    /**
+     * streaks done? --jc
+     */
+    private boolean StreakDone(String label) {
+        int count = 0;
+        int aim = 10;
+        switch (label) {
+            case "recduck":
+                for (int i = 0; i < 7; i++) {
+                    count += recCounter[i][0];
+                }
+                aim = streakAims[0];
+                break;
+            case "recbench":
+                for (int i = 0; i < 7; i++) {
+                    count += recCounter[i][1];
+                }
+                aim = streakAims[1];
+                break;
+            case "recfootball":
+                for (int i = 0; i < 7; i++) {
+                    count += recCounter[i][2];
+                }
+                aim = streakAims[2];
+                break;
+        }
+        return (count >= aim);
     }
 
     /**
@@ -259,36 +309,51 @@ public class EndGameScreen implements Screen {
         // Recreational activities = Good
         // Points every time
         // Bonus for doing it everyday
+        //jc - variation increases score
 
 
         /*
-         * Feeding the ducks gives the player points.
+         * Recreation gives score
          * Points are rewarded every time it is done but only up to 7 times
          *
          * Maximum points:
-         * - Feeding ducks (up to 7 times) = 7*10 = 70 pts
+         * - activties (up to 7 times) = 7*9 + 7 bonus for variation = 70 pts
          */
 
         // Number of times recreational activity was done
         //changed by jc
         recCount = 0;
+        int ducks = 0;
+        int benches = 0;
+        int footballs = 0;
         for (int i = 0; i < totalDays; i++) {
             recCount += recCounter[i][0] + recCounter[i][1] + recCounter[i][2];
+            ducks += recCounter[i][0];
+            benches += recCounter[i][1];
+            footballs += recCounter[i][2];
         }
 
         // Points for doing recreational activities, only up to 7 times
-        score += Math.min(recCount, 7) * 8;
+        score += Math.min(recCount, 7) * 9;
 
+        //jc -- variaton bonus of 7
+        if (ducks>1 && benches>1 && footballs>1) score+=7;
 
+        //streak bonus --jc
+        if (StreakDone("recduck")) score+=50;
+        if (StreakDone("recbench")) score+=50;
+        if (StreakDone("recfootball")) score+=50;
 
         /*
          * Total Maximum points in a week =
          *  - Studying : 140
          *  - Eating : 140
          *  - Recreation : 70
+         * changed by jc
+         *  + 50 per achievement, giving a theoretical max of 500
          */
 
-        this.maxPoints = 140 + 140 + 70;
+        this.maxPoints = 500;
 
     }
 
