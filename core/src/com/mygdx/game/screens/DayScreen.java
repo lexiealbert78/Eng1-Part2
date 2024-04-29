@@ -30,6 +30,9 @@ public class DayScreen implements Screen {
     private final int[][] recCounter;
     private final int[][] eatCounter;
 
+    //jc
+    private final int[] streakAims;
+
     int day; // Current day
 
     private final BitmapFont font; // Font used for rendering text
@@ -37,6 +40,7 @@ public class DayScreen implements Screen {
     private final SpriteBatch dayBatch;
 
     private Texture continueButton;
+
 
 
     /**
@@ -48,12 +52,15 @@ public class DayScreen implements Screen {
      * @param studyCounter Array containing study counts for each day
      * changed by jc
      * @param recCounter Array containing recreational activity counts for each day (0=duck, 1=bench, 2=football)
+     * @param streakAims Array containing streak aims passed at the end of the game
+     *
      * @param eatCounter Array containing times meals are eaten for each day
      */
-    public DayScreen(HesHustle game, Screen MainGameScreen, int day, int[] studyCounter, int[][] recCounter, int[][] eatCounter) {
+    public DayScreen(HesHustle game, Screen MainGameScreen, int day, int[] studyCounter, int[][] recCounter, int[][] eatCounter, int[] streakAims) {
         this.game = game;
         this.MainGameScreen = MainGameScreen;
         this.day = day;
+        this.streakAims = streakAims;
 
 
         // Passing in activity counters to create day summary
@@ -106,7 +113,7 @@ public class DayScreen implements Screen {
             }
             // If there are no days left, create a new EndGameScreen and set it as active.
             else {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new EndGameScreen(this.game, studyCounter, recCounter, eatCounter));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new EndGameScreen(this.game, studyCounter, recCounter, eatCounter, streakAims));
 
             }
         }
@@ -158,7 +165,7 @@ public class DayScreen implements Screen {
 
 
         font.draw(dayBatch, days_left, (screenWidth - days_left.width) / 2, (float) (screenHeight * 0.85));
-        font.draw(dayBatch, hours_left, (screenWidth - hours_left.width) / 2, (float) (screenHeight * 0.7));
+        font.draw(dayBatch, hours_left, (screenWidth - hours_left.width) / 2, (float) (screenHeight * 0.65));
 
         // Displays the summary for what the user did in the day
         GlyphLayout summary_title = new GlyphLayout();
@@ -180,10 +187,25 @@ public class DayScreen implements Screen {
         rec.setText(font, "Recreational Activities:"+(recCounter[day-1][0]+recCounter[day-1][1]+recCounter[day-1][2]));
 
         // Draw text summaries to screen
-        font.draw(dayBatch, summary_title, (screenWidth - 950) / 2, (float) (screenHeight * 0.5));
-        font.draw(dayBatch, study, (screenWidth - 950) / 2, (float) (screenHeight * 0.35));
-        font.draw(dayBatch, eaten, (screenWidth - 950) / 2, (float) (screenHeight * 0.25));
-        font.draw(dayBatch, rec, (screenWidth - 950) / 2, (float) (screenHeight * 0.15));
+        font.draw(dayBatch, summary_title, (screenWidth - 950) / 2, (float) (screenHeight * 0.75));
+        font.draw(dayBatch, study, (screenWidth - 950) / 2, (float) (screenHeight * 0.55));
+        font.draw(dayBatch, eaten, (screenWidth - 950) / 2, (float) (screenHeight * 0.45));
+        font.draw(dayBatch, rec, (screenWidth - 950) / 2, (float) (screenHeight * 0.35));
+
+        //jc- draw streak progress if changed that day
+        GlyphLayout streak = new GlyphLayout();
+        if (recCounter[day-1][0]>0) { //ducks
+            streak.setText(font, "Duck streak progress made:" + Total("recduck") + " / " + ((MainGameScreen) MainGameScreen).StreakAim("recduck"));
+            font.draw(dayBatch, streak, (screenWidth - 950) / 2, (float) (screenHeight * 0.27));
+        }
+        if (recCounter[day-1][1]>0) { //bench
+            streak.setText(font, "Bench streak progress made:" + Total("recbench") + " / " + ((MainGameScreen) MainGameScreen).StreakAim("recbench"));
+            font.draw(dayBatch, streak, (screenWidth - 950) / 2, (float) (screenHeight * 0.17));
+        }
+        if (recCounter[day-1][2]>0) { //football
+            streak.setText(font, "Football streak progress made:" + Total("recfootball") + " / " + ((MainGameScreen) MainGameScreen).StreakAim("recfootball"));
+            font.draw(dayBatch, streak, (screenWidth - 950) / 2, (float) (screenHeight * 0.07));
+        }
 
         //Drawing the continue button
         dayBatch.draw(continueButton, (float) ((Gdx.graphics.getWidth() - continueButton.getWidth())/1.25), (float) ((Gdx.graphics.getHeight() - continueButton.getHeight())/8),continueButton.getWidth()*2,continueButton.getHeight()*2);
@@ -191,6 +213,31 @@ public class DayScreen implements Screen {
         // End rendering for frame
         dayBatch.end();
 
+    }
+
+    /**
+     * sum counts for streak purposes --jc
+     */
+    private int Total(String label){
+        int count = 0;
+        switch (label){
+            case "recduck":
+                for (int i = 0; i < 7; i++) {
+                    count += recCounter[i][0];
+                }
+                break;
+            case "recbench":
+                for (int i = 0; i < 7; i++) {
+                    count += recCounter[i][1];
+                }
+                break;
+            case "recfootball":
+                for (int i = 0; i < 7; i++) {
+                    count += recCounter[i][2];
+                }
+                break;
+        }
+        return Math.min(count, ((MainGameScreen) MainGameScreen).StreakAim(label));
     }
 
     @Override

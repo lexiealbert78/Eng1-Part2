@@ -50,6 +50,11 @@ public class MainGameScreen implements Screen {
     int recPopupIndex;
     int sleepPopupIndex;
 
+    //jc- streak upper limit counters:
+    int duckStreak = 6;
+    int benchStreak = 3;
+    int footballStreak = 5;
+
     // Textures for the activity markers
     Texture markersPNG = new Texture(Gdx.files.internal("Markers.png"));
     TextureRegion recreationMarker;
@@ -463,7 +468,7 @@ public class MainGameScreen implements Screen {
         time = 0;
         mealsEaten = 0;
         timeLastInteraction = 0;
-        ((Game) Gdx.app.getApplicationListener()).setScreen(new DayScreen(this.game, this, day, studyCounter, recCounter, eatCounter));
+        ((Game) Gdx.app.getApplicationListener()).setScreen(new DayScreen(this.game, this, day, studyCounter, recCounter, eatCounter, new int[]{duckStreak, benchStreak, footballStreak}));
     }
   
 
@@ -588,6 +593,20 @@ public class MainGameScreen implements Screen {
         }
         else if (time + activity.getTimeUsage() >= MAX_TIME && time - timeLastInteraction > 3){
             game.batch.draw(popups[5][0],popupXLocation,popupYLocation);
+        }
+    }
+
+    /**
+     * return streak upper limits --jc
+     */
+    public int StreakAim(String label){
+        switch (label){
+            case "recduck":
+                return duckStreak;
+            case "recbench":
+                return benchStreak;
+            default:
+                return footballStreak;
         }
     }
 
