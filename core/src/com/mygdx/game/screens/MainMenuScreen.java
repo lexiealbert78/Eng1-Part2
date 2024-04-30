@@ -13,6 +13,9 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Screen used to show the Main menu screen
  * Also used as the Pause screen from the game
+ *
+ * All leaderButton textures and bounds have been
+ * added as part of assessment 2
  */
 public class MainMenuScreen implements Screen {
 
@@ -205,8 +208,8 @@ public class MainMenuScreen implements Screen {
                 }
                 updateButtonBounds();
 
-            } //else if (leaderButtonBounds.contains(touchX, touchY)) {
-            //show leaderboard here }
+            } else if (leaderButtonBounds.contains(touchX, touchY)) {
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new LeaderboardScreen(this.game)); }
         }
 
     }

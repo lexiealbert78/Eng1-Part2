@@ -120,7 +120,9 @@ public class EndGameScreen implements Screen {
         }
 
         //write percent score to leaderboard with their name
-        //ask users their name
+        //ask users their name on this screen - make it mandatory
+        //if users score is higher than top 10 on leaderboard, write to
+        //leaderboard, else do nothing with it
 
         finalScore.setText(font, "Final Score: " + percentScore+" / 100");
 
