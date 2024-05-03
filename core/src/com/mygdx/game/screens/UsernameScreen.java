@@ -20,9 +20,11 @@ public class UsernameScreen implements Screen {
     private final Texture background;
     private final Texture continueButton;
     private final TextField nameTextField;
+    private String playerName;
 
-    public UsernameScreen(HesHustle game, MainGameScreen gameScreen) {
+    public UsernameScreen(HesHustle game) {
         this.game = game;
+        this.playerName = null;
 
         // Create the stage with a viewport
         stage = new Stage(new ScreenViewport());
@@ -36,6 +38,10 @@ public class UsernameScreen implements Screen {
         font.setColor(Color.BLACK);
         font.getData().setScale(2);
         nameTextField = new TextField("", new TextField.TextFieldStyle(font, Color.BLACK, null, null, null));
+        float x = (Gdx.graphics.getWidth() - nameTextField.getWidth()) / 2;
+        float y = (Gdx.graphics.getHeight() - nameTextField.getHeight()) / 2;
+        nameTextField.setPosition(x, y);
+
 
         // Add actors to the stage
         stage.addActor(nameTextField);
@@ -44,6 +50,8 @@ public class UsernameScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        // Set the text field to be focused
+        stage.setKeyboardFocus(nameTextField);
     }
 
     @Override
@@ -52,7 +60,9 @@ public class UsernameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Check if F is pressed to return to Main Menu screen
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            playerName = nameTextField.getText();
+            UsernameManager.getInstance().setUsername(playerName);
             if (game != null) {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(game));
             }
@@ -62,16 +72,19 @@ public class UsernameScreen implements Screen {
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        // Draw "Enter your username" message
         GlyphLayout title = new GlyphLayout();
         BitmapFont font = new BitmapFont();
         font.getData().setScale(2);
-        title.setText(font, "Enter your username:");
         font.setColor(Color.BLACK);
+        title.setText(font, "Enter your username:");
         font.draw(stage.getBatch(), title, (Gdx.graphics.getWidth() - title.width) / 2, (Gdx.graphics.getHeight() * 0.85f));
 
-        stage.getBatch().draw(continueButton, (Gdx.graphics.getWidth() - continueButton.getWidth()) / 1.15f,
-                (Gdx.graphics.getHeight() - continueButton.getHeight()) / 10f, continueButton.getWidth() * 2,
-                continueButton.getHeight() * 2);
+        // Draw "Press Enter to Continue" message
+        GlyphLayout continueMessage = new GlyphLayout();
+        continueMessage.setText(font, "Press Enter to Continue to Game");
+        font.draw(stage.getBatch(), continueMessage, (Gdx.graphics.getWidth() - continueMessage.width) / 2, (Gdx.graphics.getHeight() * 0.3f));
+
         stage.getBatch().end();
 
         // Update and draw the stage
@@ -103,6 +116,12 @@ public class UsernameScreen implements Screen {
     public void dispose() {
 
     }
+
+    public String getPlayerName(){
+        return playerName != null ? playerName : ""; // Return playerName if not null, otherwise return an empty string
+    }
+
+
 
 
 }

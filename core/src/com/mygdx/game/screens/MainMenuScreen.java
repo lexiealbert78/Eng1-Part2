@@ -172,7 +172,7 @@ public class MainMenuScreen implements Screen {
 
 
             if (playButtonBounds.contains(touchX, touchY)) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new UsernameScreen(this.game, this.gameScreen));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new UsernameScreen(this.game));
 
             } else if (quitButtonBounds.contains(touchX, touchY)) {
                 // If quit button pressed, exit the game

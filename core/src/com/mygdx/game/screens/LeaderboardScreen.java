@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.HesHustle;
 
+import java.util.List;
+
 /**
  * Screen used to show the leaderboard to the user from the menu.
  * (added as part of assessment 2)
@@ -77,7 +79,11 @@ public class LeaderboardScreen implements Screen {
         GlyphLayout title = new GlyphLayout();
         title.setText(font, "Leaderboard");
 
-        //glyphlayout for name and score associated with it
+        // Get the list of scores
+        List<String> scores = ScoreWriter.readScores();
+
+
+
 
 
 
@@ -87,6 +93,18 @@ public class LeaderboardScreen implements Screen {
 
         // Draw the text on the screen
         font.draw(leaderboardBatch, title, (screenWidth - title.width) / 2, (float) (screenHeight*0.85));
+
+        // Render the scores on the screen
+        float y = screenHeight * 0.75f; // Initial y position for rendering scores
+        for (String score : scores) {
+            if (score != null) {
+                font.draw(leaderboardBatch, score, (screenWidth - title.width) / 2, y);
+            } else {
+                // Render an empty line if the score is null
+                font.draw(leaderboardBatch, "", (screenWidth - title.width) / 2, y);
+            }
+            y -= font.getLineHeight(); // Move to the next line
+        }
 
 
         leaderboardBatch.draw(continueButton, (float) ((Gdx.graphics.getWidth() - continueButton.getWidth())/1.15), (float) ((Gdx.graphics.getHeight() - continueButton.getHeight())/10),continueButton.getWidth()*2,continueButton.getHeight()*2);

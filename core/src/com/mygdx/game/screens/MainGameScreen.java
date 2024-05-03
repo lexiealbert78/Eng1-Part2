@@ -468,6 +468,7 @@ public class MainGameScreen implements Screen {
         time = 0;
         mealsEaten = 0;
         timeLastInteraction = 0;
+
         ((Game) Gdx.app.getApplicationListener()).setScreen(new DayScreen(this.game, this, day, studyCounter, recCounter, eatCounter, new int[]{duckStreak, benchStreak, footballStreak}));
     }
   

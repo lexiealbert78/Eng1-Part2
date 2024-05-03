@@ -67,6 +67,7 @@ public class EndGameScreen implements Screen {
         this.eatCounter = eatCounter;
         this.streakAims = streakAims;
 
+
         // Initialise SpriteBatch for rendering
         scoreSummaryBatch = new SpriteBatch();
 
@@ -104,6 +105,8 @@ public class EndGameScreen implements Screen {
 
         // Check if F is pressed, and if so return to Main Menu screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            String username = UsernameManager.getInstance().getUsername();
+            ScoreWriter.writeScore(username, percentScore);
             ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(this.game, null));
         }
 
@@ -187,9 +190,6 @@ public class EndGameScreen implements Screen {
 
         scoreSummaryBatch.end();
 
-        //if users score is higher than top 10 on leaderboard, write to
-        //leaderboard, else do nothing with it
-        //ScoreWriter.writeScore(nameTextField.getText(), percentScore);
 
 
     }

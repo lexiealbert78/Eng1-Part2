@@ -40,6 +40,7 @@ public class DayScreen implements Screen {
     private final SpriteBatch dayBatch;
 
     private Texture continueButton;
+    private UsernameScreen usernameScreen;
 
 
 
