@@ -163,11 +163,11 @@ public class EndGameScreen implements Screen {
         //jc-- achievements
         font.getData().setScale(1.75f); // Adjust the scale as needed
         if (StreakDone("recduck")){
-            streak.setText(font, "ACHIEVEMENT: Quack Connoisseur!");
+            streak.setText(font, "ACHIEVEMENT: Going Quackers!");
             font.draw(scoreSummaryBatch, streak, (screenWidth - streak.width) / 2, (float) (screenHeight*0.63));
         }
         if (StreakDone("recbench")){
-            streak.setText(font, "ACHIEVEMENT: Bench Buddy Badge!");
+            streak.setText(font, "ACHIEVEMENT: Benched!");
             font.draw(scoreSummaryBatch, streak, (screenWidth - streak.width) / 2, (float) (screenHeight*0.57));
         }
         if (StreakDone("recfootball")){
