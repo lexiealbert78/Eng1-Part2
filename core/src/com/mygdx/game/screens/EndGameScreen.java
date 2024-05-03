@@ -12,8 +12,11 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.HesHustle;
-
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import java.util.Arrays;
+
+
+
 
 /**
  * Screen used to show the final score to the user at the end of the game.
@@ -26,6 +29,7 @@ public class EndGameScreen implements Screen {
     private final HesHustle game; // Main Game instance reference
     private final Texture background; // Background art of screen
     private Texture continueButton; // Continue button
+
 
     private int score = 0; // Players game score
     private int percentScore;
@@ -75,10 +79,10 @@ public class EndGameScreen implements Screen {
         background = new Texture("endScreenBackground.png");
         continueButton = new Texture("ContinueButton.png");
 
+
         calculateScore();
 
     }
-
     /**
      * Function called when EndGameScreen becomes the active screen.
      */
@@ -96,6 +100,7 @@ public class EndGameScreen implements Screen {
     public void render(float delta) {
         // Clear screen
         ScreenUtils.clear(0, 0, 0, 1);
+
 
         // Check if F is pressed, and if so return to Main Menu screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
@@ -123,11 +128,6 @@ public class EndGameScreen implements Screen {
         if (percentScore > 100){
             percentScore = 100;
         }
-
-        //write percent score to leaderboard with their name
-        //ask users their name on this screen - make it mandatory
-        //if users score is higher than top 10 on leaderboard, write to
-        //leaderboard, else do nothing with it
 
         finalScore.setText(font, "Final Score: " + percentScore+" / 100");
 
@@ -184,7 +184,13 @@ public class EndGameScreen implements Screen {
 
         scoreSummaryBatch.draw(continueButton, (float) ((Gdx.graphics.getWidth() - continueButton.getWidth())/1.15), (float) ((Gdx.graphics.getHeight() - continueButton.getHeight())/10),continueButton.getWidth()*2,continueButton.getHeight()*2);
 
+
         scoreSummaryBatch.end();
+
+        //if users score is higher than top 10 on leaderboard, write to
+        //leaderboard, else do nothing with it
+        //ScoreWriter.writeScore(nameTextField.getText(), percentScore);
+
 
     }
 

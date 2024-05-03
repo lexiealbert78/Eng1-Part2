@@ -172,15 +172,7 @@ public class MainMenuScreen implements Screen {
 
 
             if (playButtonBounds.contains(touchX, touchY)) {
-                // Check if there is already a MainGameScreen in progress
-                if (this.gameScreen != null){
-                    // If so, set the existing gameScreen as the active screen
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(this.gameScreen);
-
-                }else {
-                    // If there is no active gameScreen, set a new MainGameScreen as the active screen
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(this.game));
-                }
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new UsernameScreen(this.game, this.gameScreen));
 
             } else if (quitButtonBounds.contains(touchX, touchY)) {
                 // If quit button pressed, exit the game
@@ -209,7 +201,13 @@ public class MainMenuScreen implements Screen {
                 updateButtonBounds();
 
             } else if (leaderButtonBounds.contains(touchX, touchY)) {
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new LeaderboardScreen(this.game)); }
+                //if game is paused
+                if(this.game != null){
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new LeaderboardScreen(this.game, this.gameScreen));
+                } else { //if leaderboard is accessed through main menu
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new LeaderboardScreen(null, null));
+                }
+            }
         }
 
     }

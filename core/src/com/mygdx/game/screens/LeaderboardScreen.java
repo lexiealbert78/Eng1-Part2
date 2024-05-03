@@ -22,10 +22,12 @@ public class LeaderboardScreen implements Screen {
     private final SpriteBatch leaderboardBatch; //SpriteBatch used to render screen
     private final HesHustle game; // Main Game instance reference
     private final Texture background; // Background art of screen
+    private final MainGameScreen gameScreen;
     private Texture continueButton; // Continue button
 
-    public LeaderboardScreen(HesHustle game) {
+    public LeaderboardScreen(HesHustle game, MainGameScreen gameScreen) {
         this.game = game;
+        this.gameScreen = gameScreen;
 
         // Initialise SpriteBatch for rendering
         leaderboardBatch = new SpriteBatch();
@@ -53,9 +55,18 @@ public class LeaderboardScreen implements Screen {
         // Clear screen
         ScreenUtils.clear(0, 0, 0, 1);
 
+
         // Check if F is pressed, and if so return to Main Menu screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(this.game, null));
+            // Check if there is already a MainGameScreen in progress
+            if (this.gameScreen != null){
+                // If so, set the existing gameScreen as the active screen
+                ((Game) Gdx.app.getApplicationListener()).setScreen(this.gameScreen);
+
+            }else {
+                // If there is no active gameScreen, set a new MainMenuScreen as the active screen
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(this.game, null));
+            }
         }
 
         // Get the Width and Height of the screen to use for centering text
