@@ -21,14 +21,13 @@ public class ScoreWriter {
             // Read existing scores line by line, up to the maximum allowed scores
             while ((line = reader.readLine()) != null && scoresCount < maxScores) {
                 String[] parts = line.split(" ");
-
                 // Extract player name and score from the line
                 String existingPlayerName = parts[0];
                 int existingScore = Integer.parseInt(parts[1]);
 
                 // Check if the new score is higher than the existing score
                 if (score > existingScore && !scoreWritten) {
-                    // If so, write the new score before the existing one
+                    // Write the new score before the existing one
                     updatedScores.append(playerName).append(" ").append(score).append("\n");
                     scoreWritten = true;
                     scoresCount++; // Increment the score count

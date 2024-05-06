@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 // Importing required libraries and classes
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -172,7 +173,14 @@ public class MainMenuScreen implements Screen {
 
 
             if (playButtonBounds.contains(touchX, touchY)) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new UsernameScreen(this.game));
+                // Check if there is already a game in progress
+                if (this.gameScreen != null){
+                    // Set the existing gameScreen as the active screen
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(this.gameScreen);
+                }else {
+                    // Set a new Username Screen as the active screen
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new UsernameScreen(this.game));
+                }
 
             } else if (quitButtonBounds.contains(touchX, touchY)) {
                 // If quit button pressed, exit the game

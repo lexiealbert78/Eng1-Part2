@@ -195,7 +195,11 @@ public class EndGameScreen implements Screen {
     }
 
     /**
-     * streaks done? --jc
+     * StreakDone()
+     *
+     * @param label The name of the recreation activity
+     *
+     * (added as part of assessment 2 jc)
      */
     private boolean StreakDone(String label) {
         int count = 0;

@@ -37,7 +37,7 @@ public class LeaderboardScreen implements Screen {
         // Setting font for rendering text
         font = new BitmapFont();
         font.setColor(Color.BLACK);
-        font.getData().setScale(2); // Adjust the scale as needed
+        font.getData().setScale(2);
 
         // Setting background artwork and continue button textures
         //Leaderboard uses the same background as endScreen
@@ -60,13 +60,13 @@ public class LeaderboardScreen implements Screen {
 
         // Check if F is pressed, and if so return to Main Menu screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            // Check if there is already a MainGameScreen in progress
+            // Check if there is already a game in progress
             if (this.gameScreen != null){
-                // If so, set the existing gameScreen as the active screen
+                // Set the existing gameScreen as the active screen
                 ((Game) Gdx.app.getApplicationListener()).setScreen(this.gameScreen);
 
             }else {
-                // If there is no active gameScreen, set a new MainMenuScreen as the active screen
+                // Set a new MainMenuScreen as the active screen
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(this.game, null));
             }
         }
@@ -82,11 +82,6 @@ public class LeaderboardScreen implements Screen {
         // Get the list of scores
         List<String> scores = ScoreWriter.readScores();
 
-
-
-
-
-
         // Render the screen background
         leaderboardBatch.begin();
         leaderboardBatch.draw(background, 0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -95,7 +90,7 @@ public class LeaderboardScreen implements Screen {
         font.draw(leaderboardBatch, title, (screenWidth - title.width) / 2, (float) (screenHeight*0.85));
 
         // Render the scores on the screen
-        float y = screenHeight * 0.75f; // Initial y position for rendering scores
+        float y = screenHeight * 0.75f;
         for (String score : scores) {
             if (score != null) {
                 font.draw(leaderboardBatch, score, (screenWidth - title.width) / 2, y);
