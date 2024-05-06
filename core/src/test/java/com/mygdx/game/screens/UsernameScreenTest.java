@@ -1,40 +1,18 @@
 package com.mygdx.game.screens;
 
+import com.mygdx.game.HesHustle;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class UsernameScreenTest {
-
-    @Test
-    void show() {
-    }
+public class UsernameScreenTest {
 
     @Test
-    void render() {
-    }
+    public void testGetPlayerName() {
+        HesHustle game = new HesHustle();
+        UsernameScreen usernameScreen = new UsernameScreen(game);
+        UsernameManager.getInstance().setUsername("Test");
 
-    @Test
-    void resize() {
-    }
-
-    @Test
-    void pause() {
-    }
-
-    @Test
-    void resume() {
-    }
-
-    @Test
-    void hide() {
-    }
-
-    @Test
-    void dispose() {
-    }
-
-    @Test
-    void getPlayerName() {
+        assertEquals("Test", usernameScreen.getPlayerName());
     }
 }
