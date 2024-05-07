@@ -1,16 +1,25 @@
 package com.mygdx.game.screens;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreWriter {
+    private static final String SCORES_FILE = "scores.txt";
+
     public static void writeScore(String playerName, int score) {
         try {
             // Maximum number of scores to keep
             int maxScores = 10;
 
+            // Check if the file exists, if not, create it
+            File file = new File(SCORES_FILE);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
             // Open a file reader to read existing scores
-            BufferedReader reader = new BufferedReader(new FileReader("scores.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(SCORES_FILE));
             // Create a string to hold the updated scores
             StringBuilder updatedScores = new StringBuilder();
 
@@ -47,7 +56,7 @@ public class ScoreWriter {
             reader.close();
 
             // Open a file writer in overwrite mode to write the updated scores back to the file
-            BufferedWriter writer = new BufferedWriter(new FileWriter("scores.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(SCORES_FILE));
             // Write the updated scores to the file
             writer.write(updatedScores.toString());
             // Close the writer
@@ -63,9 +72,16 @@ public class ScoreWriter {
     public static List<String> readScores() {
         List<String> scores = new ArrayList<>();
 
+
         try {
+            // Check if the file exists, if not, create it
+            File file = new File(SCORES_FILE);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
             // Open a file reader
-            BufferedReader reader = new BufferedReader(new FileReader("scores.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(SCORES_FILE));
             String line;
             // Read each line from the file
             while ((line = reader.readLine()) != null) {
