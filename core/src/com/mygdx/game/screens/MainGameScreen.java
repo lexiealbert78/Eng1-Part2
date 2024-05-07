@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -34,7 +36,7 @@ public class MainGameScreen implements Screen {
     Texture player_texture;
 
     // Variables for Map
-    private final TiledMap map;
+    private static TiledMap map = new TiledMap();
     private final OrthogonalTiledMapRenderer mapRenderer;
     private static final int TILE_SIZE = 32;
 
@@ -224,6 +226,13 @@ public class MainGameScreen implements Screen {
 
     }
 
+    public static String getMapName() {
+        // Check if the map is not null
+        // Retrieve the map properties
+        MapProperties mapProperties = map.getProperties();
+        // Return the map name
+        return (String) mapProperties.get("name");
+    }
     /**
      * show() function is called when MainGameScreen becomes the active screen.
      */
@@ -698,6 +707,8 @@ public class MainGameScreen implements Screen {
         }
 
     }
+
+
 
 
 

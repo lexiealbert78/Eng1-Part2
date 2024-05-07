@@ -242,6 +242,26 @@ public class MainMenuScreen implements Screen {
         menuBatch.end();
     }
 
+    public Rectangle getPlayButtonBounds() {
+        return playButtonBounds;
+    }
+
+    public Rectangle getQuitButtonBounds() {
+        return quitButtonBounds;
+    }
+
+    public Rectangle getLeaderButtonBounds() {
+        return leaderButtonBounds;
+    }
+
+    public Rectangle getMuteButtonBounds() {
+        return muteButtonBounds;
+    }
+
+    public Rectangle getFullButtonBounds() {
+        return fullButtonBounds;
+    }
+
     @Override
     public void pause() {
         // Not used
