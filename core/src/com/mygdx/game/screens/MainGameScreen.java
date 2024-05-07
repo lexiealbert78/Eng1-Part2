@@ -684,7 +684,9 @@ public class MainGameScreen implements Screen {
                     }
 
                 } else {
-                    low_energy_sound.play(1.0f);
+                    if(!this.game.gameMuted){
+                        low_energy_sound.play(1.0f);
+                    }
                 }
 
                 // Make sure the users energy can't go above 100 from eating
