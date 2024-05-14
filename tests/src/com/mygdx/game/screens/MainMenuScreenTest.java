@@ -4,24 +4,27 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.mygdx.game.GdxTestRunner;
 import com.mygdx.game.HesHustle;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.*;
-
+@RunWith(GdxTestRunner.class)
 public class MainMenuScreenTest {
 
     private static MainMenuScreen mainMenuScreen;
     private static HesHustle game;
     private static MainGameScreen mainGameScreen;
 
-    @BeforeAll
-    static void setup() {
-        game = Mockito.mock(HesHustle.class);
+    @Before
+    public void setup() {
+        HesHustle game = Mockito.mock(HesHustle.class);
         mainGameScreen = Mockito.mock(MainGameScreen.class);
         mainMenuScreen = new MainMenuScreen(game, mainGameScreen);
     }

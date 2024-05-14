@@ -2,24 +2,27 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.GdxTestRunner;
 import com.mygdx.game.HesHustle;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
-class EndGameScreenTest {
+@RunWith(GdxTestRunner.class)
+public class EndGameScreenTest {
 
     private static EndGameScreen endGameScreen;
     private static HesHustle game;
 
-    @BeforeAll
-    static void setup() {
+    @BeforeClass
+    public static void setup() {
         // Sample data for recreational activities counters for two days
         int[][] recCounter = {
                 {2, 3, 1},  // Day 1: Ducks = 2, Bench = 3, Football = 1
@@ -61,34 +64,34 @@ class EndGameScreenTest {
     }
 
     @Test
-    void show() {
+    public void show() {
     }
 
     @Test
-    void render() {
+    public void render() {
     }
 
     @Test
-    void calculateScore() {
+    public void calculateScore() {
     }
 
     @Test
-    void resize() {
+    public void resize() {
     }
 
     @Test
-    void pause() {
+    public void pause() {
     }
 
     @Test
-    void resume() {
+    public void resume() {
     }
 
     @Test
-    void hide() {
+    public void hide() {
     }
 
     @Test
-    void dispose() {
+    public void dispose() {
     }
 }

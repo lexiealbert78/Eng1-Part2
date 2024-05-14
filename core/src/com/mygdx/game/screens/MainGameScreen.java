@@ -227,10 +227,12 @@ public class MainGameScreen implements Screen {
     }
 
     public static String getMapName() {
-        // Check if the map is not null
         // Retrieve the map properties
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        map = mapLoader.load("map/GameWorld.tmx");
         MapProperties mapProperties = map.getProperties();
         // Return the map name
+        System.out.println("Map Properties: " + mapProperties);
         return (String) mapProperties.get("name");
     }
     /**
