@@ -65,13 +65,13 @@ jobs:
       uses: gradle/gradle-build-action@latest
       with:
           arguments: build jacocoTestReport
-          build-root-directory: triangle
+          build-root-directory: tests
 
     - name: Upload JaCoCo coverage report as a workflow artifact
       uses: actions/upload-artifact@v3.1.1
       with:
           name: jacoco-report
-          path: triangle/lib/build/reports/jacoco/test/html/
+          path: tests/build/reports/jacoco/test/html/
 
     
 
