@@ -61,6 +61,20 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@latest
+      with:
+          arguments: build jacocoTestReport
+          build-root-directory: triangle
+
+    - name: Upload JaCoCo coverage report as a workflow artifact
+      uses: actions/upload-artifact@v3.1.1
+      with:
+          name: jacoco-report
+          path: triangle/lib/build/reports/jacoco/test/html/
+
+    
+
     # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
     # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
     - name: Generate and submit dependency graph
