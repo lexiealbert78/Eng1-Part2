@@ -72,7 +72,12 @@ jobs:
       with:
           name: jacoco-report
           path: tests/build/reports/jacoco/test/html/
-
+          
+    - name: Upload library JAR
+      uses: actions/upload-artifact@v3.1.1
+      with:
+          name: lib.jar
+          path: core/build/libs/core-1.0.jar
     
 
     # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
