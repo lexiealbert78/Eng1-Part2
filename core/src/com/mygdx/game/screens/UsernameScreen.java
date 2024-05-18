@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.HesHustle;
 
 public class UsernameScreen implements Screen {
-
     private final HesHustle game;
     private final Stage stage;
     private final Texture background;

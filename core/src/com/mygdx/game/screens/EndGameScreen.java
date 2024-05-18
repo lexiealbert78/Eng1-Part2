@@ -25,7 +25,7 @@ public class EndGameScreen implements Screen {
 
 
     private final BitmapFont font; // Font used for rendering text
-    private final SpriteBatch scoreSummaryBatch; //SpriteBatch used to render screen
+    private SpriteBatch scoreSummaryBatch; //SpriteBatch used to render screen
     private final HesHustle game; // Main Game instance reference
     private final Texture background; // Background art of screen
     private Texture continueButton; // Continue button
@@ -69,7 +69,7 @@ public class EndGameScreen implements Screen {
 
 
         // Initialise SpriteBatch for rendering
-        scoreSummaryBatch = new SpriteBatch();
+
 
         // Setting font for rendering text
         font = new BitmapFont();
@@ -154,6 +154,8 @@ public class EndGameScreen implements Screen {
         totalRec.setText(font, "Recreation Activities = "+recCount);
         totalEat.setText(font, "Times Ate = "+timesEaten);
 
+
+        scoreSummaryBatch = new SpriteBatch();
         // Render the screen background
         scoreSummaryBatch.begin();
         scoreSummaryBatch.draw(background, 0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

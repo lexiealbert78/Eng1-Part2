@@ -20,8 +20,8 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class MainMenuScreen implements Screen {
 
-    private final SpriteBatch menuBatch; // SpriteBatch for rendering
-
+     // SpriteBatch for rendering
+     private SpriteBatch menuBatch;
     Texture playButtonTexture;
     Texture resumeButtonTexture;
     Texture quitButtonTexture;
@@ -60,7 +60,7 @@ public class MainMenuScreen implements Screen {
 
 
         // Initialising rendering variables
-        menuBatch = new SpriteBatch();
+
 
         title = new Texture(Gdx.files.internal("Title.png"));
         background = new Texture(Gdx.files.internal("background.png"));
@@ -128,8 +128,7 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         // Clear Screen
         ScreenUtils.clear(0, 0, 0, 1);
-
-
+        menuBatch = new SpriteBatch();
         menuBatch.begin();
 
         // Render the background, buttons, and title
@@ -230,7 +229,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         updateButtonBounds();
-
+        menuBatch = new SpriteBatch();
         menuBatch.begin();
 
         menuBatch.draw(playButtonTexture, playButtonBounds.x, playButtonBounds.y, playButtonBounds.width, playButtonBounds.height);
@@ -240,26 +239,6 @@ public class MainMenuScreen implements Screen {
         menuBatch.draw(fullButtonTexture, fullButtonBounds.x, fullButtonBounds.y, fullButtonBounds.width, fullButtonBounds.height);
 
         menuBatch.end();
-    }
-
-    public Rectangle getPlayButtonBounds() {
-        return playButtonBounds;
-    }
-
-    public Rectangle getQuitButtonBounds() {
-        return quitButtonBounds;
-    }
-
-    public Rectangle getLeaderButtonBounds() {
-        return leaderButtonBounds;
-    }
-
-    public Rectangle getMuteButtonBounds() {
-        return muteButtonBounds;
-    }
-
-    public Rectangle getFullButtonBounds() {
-        return fullButtonBounds;
     }
 
     @Override

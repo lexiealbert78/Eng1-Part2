@@ -37,7 +37,7 @@ public class DayScreen implements Screen {
 
     private final BitmapFont font; // Font used for rendering text
 
-    private final SpriteBatch dayBatch;
+    private SpriteBatch dayBatch;
 
     private Texture continueButton;
     private UsernameScreen usernameScreen;
@@ -71,7 +71,7 @@ public class DayScreen implements Screen {
 
 
         // Initialising rendering variables
-        dayBatch = new SpriteBatch();
+
         font = new BitmapFont();
         font.setColor(Color.WHITE);
         font.getData().setScale(3);
@@ -97,6 +97,7 @@ public class DayScreen implements Screen {
     public void render(float delta) {
         // Clear the screen with a black background
         ScreenUtils.clear(0, 0, 0, 1);
+        dayBatch = new SpriteBatch();
 
         // Leave the DayScreen if F is pressed
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
@@ -219,26 +220,30 @@ public class DayScreen implements Screen {
     /**
      * sum counts for streak purposes --jc
      */
-    private int Total(String label){
+    public int Total(String label){
         int count = 0;
+        int streak = 0;
         switch (label){
             case "recduck":
                 for (int i = 0; i < 7; i++) {
                     count += recCounter[i][0];
                 }
+                streak = 0;
                 break;
             case "recbench":
                 for (int i = 0; i < 7; i++) {
                     count += recCounter[i][1];
                 }
+                streak = 1;
                 break;
             case "recfootball":
                 for (int i = 0; i < 7; i++) {
                     count += recCounter[i][2];
                 }
+                streak = 2;
                 break;
         }
-        return Math.min(count, ((MainGameScreen) MainGameScreen).StreakAim(label));
+        return Math.min(count, streakAims[streak]);
     }
 
     @Override
