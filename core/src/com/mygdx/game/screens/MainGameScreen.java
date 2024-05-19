@@ -37,7 +37,7 @@ public class MainGameScreen implements Screen {
 
     // Variables for Map
     private static TiledMap map = new TiledMap();
-    private final OrthogonalTiledMapRenderer mapRenderer;
+    private OrthogonalTiledMapRenderer mapRenderer;
     private static final int TILE_SIZE = 32;
 
     // Hanging Sign texture for time HUD
@@ -79,12 +79,12 @@ public class MainGameScreen implements Screen {
     final float GAME_WORLD_WIDTH = 1568;
     final float GAME_WORLD_HEIGHT = 1056;
 
-    public final float SPAWN_POINT_X = 1360;
-    public final float SPAWN_POINT_Y = 620;
+    public static final float SPAWN_POINT_X = 1360;
+    public static final float SPAWN_POINT_Y = 620;
 
     // Variables for player position initialised to spawn point
-    float player_x = SPAWN_POINT_X;
-    float player_y = SPAWN_POINT_Y;
+    static float player_x = SPAWN_POINT_X;
+    static float player_y = SPAWN_POINT_Y;
 
     // Camera position variables initialised to players position
     float camera_x = player_x;
@@ -102,7 +102,7 @@ public class MainGameScreen implements Screen {
     final int MAX_TIME = 960;
 
     // Timer used to progress time in game
-    private Timer timer;
+    Timer timer;
 
     // Variable to store current day, initialised at 0
     int day = 0;
@@ -161,7 +161,6 @@ public class MainGameScreen implements Screen {
         // Load the TMX map
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("map/GameWorld.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map);
 
 
         // Setting up the camera with initial position and size
@@ -226,15 +225,6 @@ public class MainGameScreen implements Screen {
 
     }
 
-    public static String getMapName() {
-        // Retrieve the map properties
-        TmxMapLoader mapLoader = new TmxMapLoader();
-        map = mapLoader.load("map/GameWorld.tmx");
-        MapProperties mapProperties = map.getProperties();
-        // Return the map name
-        System.out.println("Map Properties: " + mapProperties);
-        return (String) mapProperties.get("name");
-    }
     /**
      * show() function is called when MainGameScreen becomes the active screen.
      */
@@ -253,6 +243,7 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        mapRenderer = new OrthogonalTiledMapRenderer(map);
         // Handling input for player movement using WASD and up/down/left/right arrows.
         int up    = Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP) ? 1 : 0;
         int down  = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN) ? 1 : 0;
@@ -362,6 +353,13 @@ public class MainGameScreen implements Screen {
         player_x = x;
         player_y = y;
     }
+    public static float GetPlayerX(){
+        return player_x;
+    }
+    public static float GetPlayerY(){
+        return player_y;
+    }
+
 
     /**
      * Handle the players movement including collisions and bounds detection
@@ -370,8 +368,8 @@ public class MainGameScreen implements Screen {
      * @param horizontal Horizontal (x) movement input
      * @param vertical Vertical (y) movement input
      */
-    private void handleMovement(int horizontal, int vertical) {
-
+    void handleMovement(int horizontal, int vertical) {
+        player_texture = new Texture("Character.png");
         // Check if the player has low energy
         if (energy <= 15){
             // If so, half the movement speed

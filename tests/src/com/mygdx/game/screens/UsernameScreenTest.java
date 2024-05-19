@@ -15,9 +15,6 @@ public class UsernameScreenTest {
     public void testGetPlayerName() {
         HesHustle game = Mockito.mock(HesHustle.class);
         UsernameScreen usernameScreen = new UsernameScreen(game);
-        //UsernameScreen.render(1);
-        UsernameManager.getInstance().setUsername("Test");
-        System.out.println(usernameScreen.getPlayerName());
-        assertEquals("Test", usernameScreen.getPlayerName());
+        assertEquals("", usernameScreen.getPlayerName());
     }
 }

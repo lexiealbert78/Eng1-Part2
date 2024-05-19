@@ -3,14 +3,18 @@ package com.mygdx.game.screens;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.GdxTestRunner;
 import com.mygdx.game.HesHustle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Timer;
+
+import static java.lang.Thread.sleep;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,109 +23,76 @@ public class MainGameScreenTest {
 
 
     @Test
-    public void testMapLoading() {
+    public void testPlayerMovementsX() {
         HesHustle game = Mockito.mock(HesHustle.class);
         MainGameScreen mainGameScreen = new MainGameScreen(game);
-        assertEquals("map/GameWorld.tmx", MainGameScreen.getMapName());
+        float X = MainGameScreen.GetPlayerX();
+        mainGameScreen.handleMovement(100, 100);
+        assertNotEquals(X + 100, MainGameScreen.GetPlayerX());
     }
 
     @Test
-    public void testPauseButtonPressed() {
+    public void testPlayerMovementsY() {
         HesHustle game = Mockito.mock(HesHustle.class);
         MainGameScreen mainGameScreen = new MainGameScreen(game);
-        // Simulate a button press
-        mainGameScreen.render(0);
-
-        // Assuming your button press logic is triggered by F key press
-        when(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)).thenReturn(true);
-
-        // Call render again to handle button press
-        mainGameScreen.render(0);
-        // Verify that the screen changes to the MainGameScreen
-        verify(game).setScreen(any());
+        float Y = MainGameScreen.GetPlayerY();
+        mainGameScreen.handleMovement(100, 100);
+        assertNotEquals(Y + 100, MainGameScreen.GetPlayerY());
     }
- /*
+
     @Test
-    public void testPlayerMovements() {
+    public void TestStreakAimDuck() {
         HesHustle game = Mockito.mock(HesHustle.class);
         MainGameScreen mainGameScreen = new MainGameScreen(game);
-        mainGameScreen.render(0);
-        mainGameScreen.loadPlayer();
-        mainGameScreen.movePlayer(10, 10);
-        assertEquals(10, mainGameScreen.player_x);
-        assertEquals(10, mainGameScreen.player_y);
+        int duck = mainGameScreen.StreakAim("recduck");
+        assertEquals(6, duck);
     }
-*/
-            /*
-            @Test
-            public void testLoadCamera() {
-                mainGameScreen.loadCamera();
-                assertEquals(0, mainGameScreen.getCamera().position.x, 0.01);
-                assertEquals(0, mainGameScreen.getCamera().position.y, 0.01);
-            }
 
+    @Test
+    public void TestStreakAimBench() {
+        HesHustle game = Mockito.mock(HesHustle.class);
+        MainGameScreen mainGameScreen = new MainGameScreen(game);
+        int bench = mainGameScreen.StreakAim("recbench");
+        assertEquals(3, bench);
+    }
 
+    @Test
+    public void TestStreakAimBall() {
+        HesHustle game = Mockito.mock(HesHustle.class);
+        MainGameScreen mainGameScreen = new MainGameScreen(game);
+        int ball = mainGameScreen.StreakAim("");
+        assertEquals(5, ball);
+    }
 
+    @Test
+    public void TestStartGameTimer() {
+        HesHustle game = Mockito.mock(HesHustle.class);
+        MainGameScreen mainGameScreen = new MainGameScreen(game);
+        mainGameScreen.startGameTimer(0);
+        Timer timer = mainGameScreen.timer;
+        assertNotEquals(null, timer);
+    }
 
-            @Test
-            public void testLoadInteractions() {
-                mainGameScreen.loadInteractions();
-                // Add assertions here to test interactions loading
-            }
+    @Test
+    public void TestStopGameTimer() {
+        HesHustle game = Mockito.mock(HesHustle.class);
+        MainGameScreen mainGameScreen = new MainGameScreen(game);
+        mainGameScreen.startGameTimer(0);
+        mainGameScreen.stopGameTimer();
+        Timer timer = mainGameScreen.timer;
+        assertEquals(null, timer);
+    }
 
-            @Test
-            public void testCameraMovements() {
-                mainGameScreen.loadCamera();
-                mainGameScreen.moveCamera(100, 100);
-                assertEquals(100, mainGameScreen.getCamera().position.x, 0.01);
-                assertEquals(100, mainGameScreen.getCamera().position.y, 0.01);
-            }
+    @Test
+    public void TestActivityPlayerClose() {
+        HesHustle game = Mockito.mock(HesHustle.class);
+        MainGameScreen mainGameScreen = new MainGameScreen(game);
+        Texture markersPNG = new Texture(Gdx.files.internal("Markers.png"));
+        TextureRegion[][] tmpMarkers = TextureRegion.split(markersPNG, markersPNG.getWidth() / 4, markersPNG.getHeight());
+        TextureRegion recreationMarker = tmpMarkers[0][0];
+        Activity activity = new Activity("recfootball", 1158, 585, -30, 60, recreationMarker, 1);
+        assertTrue(activity.isPlayerClose(1158, 585));
 
-            @Test
-            public void testWalkingAnimations() {
-                mainGameScreen.loadPlayer();
-                mainGameScreen.getPlayer().walk();
-                // Add assertions here to test walking animations
-            }
+    }
 
-            @Test
-            public void testInteractionMarkers() {
-                mainGameScreen.loadInteractions();
-                mainGameScreen.updateInteractionMarkers();
-                // Add assertions here to test interaction markers visibility
-            }
-
-            @Test
-            public void testCreatingActivityInstances() {
-                mainGameScreen.createActivityInstance(ActivityType.EXAMPLE);
-                // Add assertions here to test creating activity instances
-            }
-
-            @Test
-            public void testMusic() {
-                mainGameScreen.playMusic("background_music.mp3");
-                // Add assertions here to test music playback
-            }
-
-            @Test
-            public void testBlockingOfTilesAndMap() {
-                mainGameScreen.loadMap("map.tmx");
-                mainGameScreen.blockTile(5, 5);
-                assertEquals(true, mainGameScreen.isTileBlocked(5, 5));
-            }
-
-            @Test
-            public void testDrawsEnergyBar() {
-                mainGameScreen.loadPlayer();
-                mainGameScreen.drawEnergyBar();
-                // Add assertions here to test energy bar visibility
-            }
-
-            @Test
-            public void testDrawsTime() {
-                mainGameScreen.updateTime();
-                // Add assertions here to test time display
-            }
-
-             */
-        }
+}

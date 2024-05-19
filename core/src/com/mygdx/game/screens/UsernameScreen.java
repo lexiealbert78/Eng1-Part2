@@ -15,7 +15,7 @@ import com.mygdx.game.HesHustle;
 
 public class UsernameScreen implements Screen {
     private final HesHustle game;
-    private final Stage stage;
+    private Stage stage;
     private final Texture background;
     private final Texture continueButton;
     private final TextField nameTextField;
@@ -26,7 +26,7 @@ public class UsernameScreen implements Screen {
         this.playerName = null;
 
         // Create the stage with a viewport
-        stage = new Stage(new ScreenViewport());
+
 
         // Load resources
         background = new Texture("endScreenBackground.png");
@@ -43,11 +43,13 @@ public class UsernameScreen implements Screen {
 
 
         // Add actors to the stage
-        stage.addActor(nameTextField);
+
     }
 
     @Override
     public void show() {
+        stage = new Stage(new ScreenViewport());
+        stage.addActor(nameTextField);
         Gdx.input.setInputProcessor(stage);
         // Set the text field to be focused
         stage.setKeyboardFocus(nameTextField);

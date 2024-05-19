@@ -108,8 +108,8 @@ public class DayScreen implements Screen {
 
                 // Set player position to game spawn point
                 ((MainGameScreen) MainGameScreen).setPlayerPosition(
-                        (int) ((MainGameScreen) MainGameScreen).SPAWN_POINT_X,
-                        (int) ((MainGameScreen) MainGameScreen).SPAWN_POINT_Y);
+                        (int) com.mygdx.game.screens.MainGameScreen.SPAWN_POINT_X,
+                        (int) com.mygdx.game.screens.MainGameScreen.SPAWN_POINT_Y);
 
                 ((Game) Gdx.app.getApplicationListener()).setScreen(this.MainGameScreen);
             }
