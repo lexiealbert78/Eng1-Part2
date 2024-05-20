@@ -1,7 +1,5 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.mygdx.game.GdxTestRunner;
 import com.mygdx.game.HesHustle;
 
@@ -11,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,13 +24,13 @@ public class EndGameScreenTest {
     public static void setup() {
         // Sample data for recreational activities counters for two days
         int[][] recCounter = {
-                {1, 1, 1},  // Day 1: Ducks = 2, Bench = 3, Football = 1
+                {1, 0, 1},  // Day 1: Ducks = 2, Bench = 3, Football = 1
                 {1, 1, 1},   // Day 2: Ducks = 1, Bench = 4, Football = 2
-                {1, 1, 1},
-                {1, 1, 1},
-                {1, 1, 1},
-                {1, 1, 1},
-                {1, 1, 1}
+                {1, 0, 1},
+                {1, 0, 1},
+                {1, 0, 0},
+                {1, 0, 0},
+                {1, 0, 0}
                 // Add more days as needed
         };
 
@@ -54,34 +53,19 @@ public class EndGameScreenTest {
 
 
     @Test
-    public void show() {
+    public void testStreakDone() {
+        assertTrue(endGameScreen.StreakDone("recduck"));
+        assertFalse(endGameScreen.StreakDone("recbench"));
+        assertFalse(endGameScreen.StreakDone("recfootball"));
     }
 
     @Test
-    public void render() {
-    }
+    public void testCalculateScore() {
+        endGameScreen.calculateScore();
 
-    @Test
-    public void calculateScore() {
-    }
+        int expectedScore = 390;
+        int actualScore = endGameScreen.score;
 
-    @Test
-    public void resize() {
-    }
-
-    @Test
-    public void pause() {
-    }
-
-    @Test
-    public void resume() {
-    }
-
-    @Test
-    public void hide() {
-    }
-
-    @Test
-    public void dispose() {
+        assertEquals(expectedScore, actualScore);
     }
 }

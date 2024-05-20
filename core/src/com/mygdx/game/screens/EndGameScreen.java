@@ -31,7 +31,7 @@ public class EndGameScreen implements Screen {
     private Texture continueButton; // Continue button
 
 
-    private int score = 0; // Players game score
+    int score = 0; // Players game score
     private int percentScore;
     // Arrays to store counts each activity for each day
     private final int[] studyCounter;
@@ -205,7 +205,7 @@ public class EndGameScreen implements Screen {
      *
      * (added as part of assessment 2 jc)
      */
-    private boolean StreakDone(String label) {
+    boolean StreakDone(String label) {
         int count = 0;
         int aim = 10;
         switch (label) {
